@@ -21,15 +21,27 @@ def _loaded_handle():
 
 def load_dll():
     global _load_tried
-    if _loaded_handle() or _load_tried or os.name != "nt":
+    if os.name != "nt":
         return
-    _load_tried = True
-    path = _dll_path()
-    if path:
-        try:
-            ctypes.WinDLL(path)
-        except OSError:
-            traceback.print_exc()
+    if not _loaded_handle() and not _load_tried:
+        _load_tried = True
+        path = _dll_path()
+        if path:
+            try:
+                ctypes.WinDLL(path)
+            except OSError:
+                traceback.print_exc()
+    _set_package()
+
+
+#the DLL imports the linkdrag module by name, and the package is "bl_ext.<repo>.named_reroute_node" for an extension
+def _set_package():
+    if not _loaded_handle():
+        return
+    lib = ctypes.WinDLL(DLL_NAME)
+    if hasattr(lib, "see_set_python_package"):
+        lib.see_set_python_package.argtypes = [ctypes.c_char_p]
+        lib.see_set_python_package(__package__.encode("utf-8"))
 
 
 def dll():

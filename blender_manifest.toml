@@ -1,0 +1,17 @@
+schema_version = "1.0.0"
+id = "named_reroute_node"
+version = "1.3.0"
+name = "Named Reroute Node"
+tagline = "Named Reroute nodes for Shader, Geometry and Compositor editors"
+maintainer = "Jen_"
+type = "add-on"
+website = "https://github.com/jen3713/Blender-NamedRerouteNode"
+tags = ["Node", "Compositing", "Geometry Nodes", "Material"]
+blender_version_min = "5.1.0"
+license = ["SPDX:GPL-3.0-or-later"]
+
+[permissions]
+files = "Load the native DLL, read blender.pdb and write a log file"
+
+[build]
+paths_exclude_pattern = ["__pycache__/", "/.git/", "/.gitattributes", "/.gitignore", "/native/", "/*.zip"]

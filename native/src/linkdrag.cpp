@@ -2,7 +2,8 @@
 //
 //That popup is built in C++ from node declarations, which Python nodes do not have, so the entries are
 //added by hand: the update callback of the popup runs the original and then appends our items, and the
-//exec callback handles a chosen item by asking the add-on (NamedRerouteNode.linkdrag) to create the node.
+//exec callback handles a chosen item by asking the add-on's linkdrag module to create the node.
+//The add-on passes its package name with see_set_python_package: it differs between an add-on and an extension install.
 //Every call into Python goes through PyRun_SimpleString. The add-on talks back through the see_* exports.
 
 #include "linkdrag.h"
@@ -56,6 +57,7 @@ SearchItemAddFn g_add = nullptr;
 GilEnsureFn g_gil_ensure = nullptr;
 GilReleaseFn g_gil_release = nullptr;
 RunSimpleFn g_run = nullptr;
+std::string g_package;
 
 bool resolve_python()
 {
@@ -75,10 +77,16 @@ bool resolve_python()
   return false;
 }
 
-void run_python(const char *code)
+//calls a function of the add-on's linkdrag module
+void run_python(const std::string &call)
 {
+  if (g_package.empty()) {
+    log("link drag: Python package not set");
+    return;
+  }
+  std::string code = "import " + g_package + ".linkdrag as _l; _l." + call;
   int state = g_gil_ensure();
-  g_run(code);
+  g_run(code.c_str());
   g_gil_release(state);
 }
 
@@ -140,7 +148,7 @@ bool on_update(CONTEXT *ctx)
 
   if (is_first) {
     g_items.clear();
-    run_python("import NamedRerouteNode.linkdrag as _l; _l.prepare()");
+    run_python("prepare()");
   }
 
   auto add_ours = [&]() {
@@ -180,8 +188,7 @@ bool on_exec(CONTEXT *ctx)
   void *chosen = (void *)ctx->R8;
   for (size_t i = 0; i < g_items.size(); i++) {
     if (g_items[i].get() == chosen) {
-      std::string code = "import NamedRerouteNode.linkdrag as _l; _l.apply(" + std::to_string(i) + ")";
-      run_python(code.c_str());
+      run_python("apply(" + std::to_string(i) + ")");
       return true;
     }
   }
@@ -215,6 +222,11 @@ bool install(const Symbols &sym)
 }
 
 extern "C" {
+
+__declspec(dllexport) void see_set_python_package(const char *package)
+{
+  see::linkdrag::g_package = package ? package : "";
+}
 
 __declspec(dllexport) void see_clear_link_items()
 {
