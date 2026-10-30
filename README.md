@@ -1,5 +1,8 @@
 # Named Reroute Node
 
+<img width="1920" height="1080" alt="NR_Pic1" src="https://github.com/user-attachments/assets/89ed3dd3-30d2-4ed7-955a-7d09e205a326" />
+
+
 Named Reroute nodes for Blender's Shader, Geometry Nodes and Compositor editors. 
 
 Blender 5.1+
@@ -14,7 +17,7 @@ macOS/Linux: nodes, panel and link resolving work, but wires stay long, Use node
 ## Install
 
 Copy this folder (the `native` folder is not needed) to
-`%APPDATA%\Blender Foundation\Blender\5.1\scripts\addons\NamedRerouteNode`, then enable **Named Reroute Node** in
+`%APPDATA%\Roaming\Blender Foundation\Blender\5.1\extensions\user_default\NamedRerouteNode`, then enable **Named Reroute Node** in
 Preferences > Add-ons. `blender.pdb` must stay next to `blender.exe`.
 
 ## Use
