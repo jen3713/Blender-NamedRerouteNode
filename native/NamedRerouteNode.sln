@@ -1,0 +1,22 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NamedRerouteNode", "NamedRerouteNode.vcxproj", "{5E1F7A3C-2B64-4C0E-9A57-6D3B8F12C4A1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E1F7A3C-2B64-4C0E-9A57-6D3B8F12C4A1}.Debug|x64.ActiveCfg = Debug|x64
+		{5E1F7A3C-2B64-4C0E-9A57-6D3B8F12C4A1}.Debug|x64.Build.0 = Debug|x64
+		{5E1F7A3C-2B64-4C0E-9A57-6D3B8F12C4A1}.Release|x64.ActiveCfg = Release|x64
+		{5E1F7A3C-2B64-4C0E-9A57-6D3B8F12C4A1}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
